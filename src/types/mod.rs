@@ -1,18 +1,30 @@
+use std::fmt::Display;
 
-use std::{fmt::Display};
+struct PrintStatement{
+    arg: PrintArg
+}
+
+pub enum PrintArg{
+    Literal(Literal),
+    Identifier(Identifier)
+}
 
 #[derive(Debug)]
 pub enum Token {
     Operator(Operator),
     Keyword(Keyword),
-    Identifier(String),
+    Identifier(Identifier),
     Literal(Literal),
     Delimiter(Delimiter),
 }
 
 #[derive(Debug)]
+pub enum Identifier {
+    String(String)
+}
+
+#[derive(Debug)]
 pub enum Keyword {
-    Print,
     Let,
 }
 
@@ -52,14 +64,18 @@ impl Operator {
 
 #[derive(Debug)]
 pub struct Error {
-    pub errorType: ErrorTypes,
+    pub error_type: ErrorTypes,
     pub column: u32,
     pub line_number: u32,
 }
 
-impl Display for Error{
+impl Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}: Unknown Token at line: {}, column: {}", self.errorType, self.line_number, self.column)
+        write!(
+            f,
+            "{:?}: Unknown Token at line: {}, column: {}",
+            self.error_type, self.line_number, self.column
+        )
     }
 }
 
@@ -72,4 +88,3 @@ pub enum ErrorTypes {
 pub enum LexError {
     UnknownToken,
 }
-

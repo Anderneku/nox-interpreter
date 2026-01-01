@@ -1,9 +1,9 @@
-mod types;
 mod lexer;
-use crate::{lexer::lex};
-
+mod parser;
+mod types;
+use crate::lexer::Lexer;
+// use crate::parser::parse;
 
 fn main() {
-    let source :&str = "print(34);";
-    println!("{:?}", lex(source));
+    let source: &str = "print(34);";
 }
